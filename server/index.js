@@ -16,10 +16,21 @@ import addressRouter from "./route/address.route.js";
 import orderRouter from "./route/order.route.js";
 
 const app = express()
+const allowedOrigins = [
+  "https://full-stack-grocery-mart-wpee.vercel.app" // your actual frontend
+];
+
 app.use(cors({
-  credentials : true,
-  origin : process.env.FRONTEND_URL
-}))
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("Blocked CORS origin:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true // keep this if using cookies or refresh tokens
+}));
 
 app.use(express.json())
 app.use(cookieParser())
