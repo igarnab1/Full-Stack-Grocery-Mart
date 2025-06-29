@@ -10,4 +10,4 @@ const successAlert = (title)=>{
     return alert
 }
 
-export default successAlert
+export default successAlert 
